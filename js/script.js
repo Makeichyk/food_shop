@@ -50,10 +50,10 @@ window.addEventListener("DOMContentLoaded", () => {
       minutes = 0;
       seconds = 0;
     } else {
-      (days = Math.floor(t / 1000 / 60 / 60 / 24)),
-        (hours = Math.floor((t / 1000 / 60 / 60) % 24)),
-        (minutes = Math.floor((t / 1000 / 60) % 60)),
-        (seconds = Math.floor((t / 1000) % 60));
+      days = Math.floor(t / 1000 / 60 / 60 / 24);
+      hours = Math.floor((t / 1000 / 60 / 60) % 24);
+      minutes = Math.floor((t / 1000 / 60) % 60);
+      seconds = Math.floor((t / 1000) % 60);
     }
 
     return {
@@ -91,3 +91,52 @@ window.addEventListener("DOMContentLoaded", () => {
 
   setClock(".timer", endOfSale);
 });
+
+// __ Modal ___
+const contactBtns = document.querySelectorAll("[data-modal]"),
+  modal = document.querySelector(".modal"),
+  closeModalBtn = document.querySelector("[data-modalClose]");
+
+function showModal() {
+  modal.classList.add("show");
+  modal.classList.remove("hide");
+  document.body.style.overflow = "hidden";
+  clearInterval(modalTimerID);
+}
+function closeModal() {
+  modal.classList.add("hide");
+  modal.classList.remove("show");
+  document.body.style.overflow = "";
+}
+
+// close modal on click on background
+modal.addEventListener("click", (event) => {
+  if (event.target === modal) {
+    closeModal();
+  }
+});
+// close modal on press "Escape"
+document.addEventListener("keyup", (event) => {
+  if (event.key === "Escape" && modal.classList.contains("show")) {
+    closeModal();
+  }
+});
+contactBtns.forEach((btn) => btn.addEventListener("click", showModal));
+closeModalBtn.addEventListener("click", closeModal);
+
+const modalTimerID = setTimeout(showModal, 7500);
+
+function showModalByScroll() {
+  {
+    if (
+      document.documentElement.scrollTop +
+        document.documentElement.clientHeight >=
+      document.documentElement.scrollHeight
+    ) {
+      showModal();
+      window.removeEventListener("scroll", showModalByScroll);
+    }
+  }
+}
+
+window.addEventListener("scroll", showModalByScroll);
