@@ -38,7 +38,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
   hideTabContent();
   showTabContent();
-  //  ___ Timer _____
+
+//  ___ Timer _____
   const endOfSale = "2023-03-20";
 
   function getTimeRemaining(deadline) {
@@ -121,6 +122,7 @@ document.addEventListener("keyup", (event) => {
     closeModal();
   }
 });
+
 contactBtns.forEach((btn) => btn.addEventListener("click", showModal));
 closeModalBtn.addEventListener("click", closeModal);
 
@@ -140,3 +142,69 @@ function showModalByScroll() {
 }
 
 window.addEventListener("scroll", showModalByScroll);
+
+// ___ CLASSES ____
+const DATA_MENUCARDS = {
+  fitnes: {
+    title: "Фитнес",
+    textContent: `Меню “Фитнес” - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!`,
+    imgSrc: "img/tabs/vegy.jpg",
+    imgAlt: "vegy food",
+    price: 229,
+  },
+  premium: {
+    title: "Премиум",
+    textContent: `В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!`,
+    imgSrc: "img/tabs/elite.jpg",
+    imgAlt: "premium food",
+    price: 550,
+  },
+  post: {
+    title: "Постное",
+    textContent: `Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.`,
+    imgSrc: "img/tabs/post.jpg",
+    imgAlt: "post food",
+    price: 430,
+  },
+};
+
+class MenuItem {
+  constructor(imgSrc, imgAlt, title, text, price, parentSelector) {
+    this.imgSrc = imgSrc;
+    this.imgAlt = imgAlt;
+    this.title = title;
+    this.text = text;
+    this.price = price;
+    this.transfer = 27;
+    this.parent = document.querySelector(parentSelector);
+    this.changeToUSD();
+  }
+  renderMenuCard() {
+    const element = document.createElement("div");
+    element.innerHTML = `<div class="menu__item">
+              <img src=${this.imgSrc} alt=${this.imgAlt}>
+              <h3 class="menu__item-subtitle">Меню "${this.title}"</h3>
+              <div class="menu__item-descr">${this.text}</div>
+              <div class="menu__item-divider"></div>
+              <div class="menu__item-price">
+                <div class="menu__item-cost">Цена:</div>
+                <div class="menu__item-total"><span>${this.price}</span> $/день</div>
+              </div>
+            </div>`;
+    this.parent.append(element);
+  }
+  changeToUSD() {
+    this.price = Math.round(this.price / this.transfer);
+  }
+}
+
+for (let key in DATA_MENUCARDS){
+  new MenuItem(
+    DATA_MENUCARDS[key].imgSrc,
+    DATA_MENUCARDS[key].imgAlt,
+    DATA_MENUCARDS[key].title,
+    DATA_MENUCARDS[key].textContent,
+    DATA_MENUCARDS[key].price,
+    ".menu .container"
+  ).renderMenuCard();
+}
