@@ -319,9 +319,9 @@ a {
   overflow: hidden;
 }
 
-.offer__slider-inner{
+.offer__slider-inner {
   display: flex;
-  transition: "all 0.5s";
+  transition: all 0.5s;
 }
 
 .offer__slider-prev {
