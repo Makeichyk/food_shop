@@ -297,4 +297,65 @@ window.addEventListener("DOMContentLoaded", () => {
   fetch("http://localhost:3000/menu")
     .then((data) => data.json())
     .then((res) => console.log(res));
+
+  // SLIDER
+
+  const sliderWrapper = document.querySelector(".offer__slider-wrapper"),
+    sliderInner = sliderWrapper.querySelector(".offer__slider-inner"),
+    slides = sliderInner.querySelectorAll(".offer__slide"),
+    slidesCount = slides.length,
+    sliderCouner = document.querySelector(".offer__slider-counter"),
+    arrowPrev = sliderCouner.querySelector(".offer__slider-prev"),
+    arrowNext = sliderCouner.querySelector(".offer__slider-next"),
+    total = sliderCouner.querySelector("#total"),
+    current = sliderCouner.querySelector("#current"),
+    wrapperWidth = window.getComputedStyle(sliderWrapper).width,
+    numWrapperWidth = +wrapperWidth.slice(0, wrapperWidth.length - 2);
+
+  let slideIndex = 1,
+    offset = 0;
+
+  sliderInner.style.width = `${100 * slides.length}%`;
+  slides.forEach((slide) => (slide.style.width = wrapperWidth));
+
+  if (slidesCount < 10) {
+    total.textContent = `0${slidesCount}`;
+    current.textContent = `0${slideIndex}`;
+  } else {
+    total.textContent = slidesCount;
+    current.textContent = slideIndex;
+  }
+
+  function slide(direction) {
+    if (direction.toLowerCase() === "next") {
+      +offset === numWrapperWidth * (slides.length - 1)
+        ? (offset = 0)
+        : (offset += numWrapperWidth);
+
+      slideIndex == slides.length ? (slideIndex = 1) : slideIndex++;
+
+      slides.length < 10
+        ? (current.textContent = `0${slideIndex}`)
+        : (current.textContent = slideIndex);
+
+      sliderInner.style.transform = `translateX(-${offset}px)`;
+    } else if (direction.toLowerCase() === "prev") {
+      offset === 0
+        ? (offset = numWrapperWidth * (slides.length - 1))
+        : (offset -= numWrapperWidth);
+
+      slideIndex == 1 ? (slideIndex = slides.length) : slideIndex--;
+
+      slides.length < 10
+        ? (current.textContent = `0${slideIndex}`)
+        : (current.textContent = slideIndex);
+
+      sliderInner.style.transform = `translateX(-${offset}px)`;
+    } else {
+      console.error("wrong function parameters");
+    }
+  }
+
+  arrowNext.addEventListener("click", () => slide("next"));
+  arrowPrev.addEventListener("click", () => slide("prev"));
 });
