@@ -318,12 +318,11 @@ window.addEventListener("DOMContentLoaded", () => {
   sliderInner.style.width = `${100 * slides.length}%`;
   slides.forEach((slide) => (slide.style.width = wrapperWidth));
 
+  current.textContent = `0${slideIndex}`;
   if (slidesCount < 10) {
     total.textContent = `0${slidesCount}`;
-    current.textContent = `0${slideIndex}`;
   } else {
     total.textContent = slidesCount;
-    current.textContent = slideIndex;
   }
 
   function slide(direction) {
@@ -334,7 +333,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
       slideIndex == slides.length ? (slideIndex = 1) : slideIndex++;
 
-      slides.length < 10
+      slideIndex < 10
         ? (current.textContent = `0${slideIndex}`)
         : (current.textContent = slideIndex);
 
@@ -346,7 +345,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
       slideIndex == 1 ? (slideIndex = slides.length) : slideIndex--;
 
-      slides.length < 10
+      slideIndex < 10
         ? (current.textContent = `0${slideIndex}`)
         : (current.textContent = slideIndex);
 
