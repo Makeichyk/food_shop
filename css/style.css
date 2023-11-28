@@ -777,3 +777,7 @@ a {
 .dot-active {
   opacity: 1;
 }
+
+.input-error{
+  border: 1px solid rgb(243, 45, 45)
+}
