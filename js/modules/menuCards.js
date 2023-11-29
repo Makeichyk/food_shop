@@ -1,3 +1,5 @@
+import { getMenuData } from "../services/services";
+
 function generateMenuCards() {
   class MenuItem {
     constructor(
@@ -30,6 +32,7 @@ function generateMenuCards() {
           : true;
         this.classes.forEach((className) => element.classList.add(className));
       }
+
       element.innerHTML = `
               <img src=${this.imgSrc} alt=${this.imgAlt}>
               <h3 class="menu__item-subtitle">${this.title}</h3>
@@ -39,18 +42,10 @@ function generateMenuCards() {
                 <div class="menu__item-cost">Цена:</div>
                 <div class="menu__item-total"><span>${this.price}</span> $/день</div>
               </div>`;
+
       this.parent.append(element);
     }
   }
-
-  const getMenuData = async (url) => {
-    const res = await fetch(url);
-    if (!res.ok) {
-      throw new Error(`Could not fetch ${url}, status: ${res.status}`);
-    }
-
-    return await res.json();
-  };
 
   getMenuData("http://localhost:3000/menu").then((data) => {
     data.forEach(({ img, altimg, title, descr, price }) => {
@@ -67,4 +62,4 @@ function generateMenuCards() {
   });
 }
 
-module.exports = generateMenuCards;
+export default generateMenuCards;

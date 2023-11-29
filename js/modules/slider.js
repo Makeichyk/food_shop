@@ -1,14 +1,24 @@
-function slider() {
-  const slider = document.querySelector(".offer__slider"),
-    sliderWrapper = slider.querySelector(".offer__slider-wrapper"),
-    sliderInner = sliderWrapper.querySelector(".offer__slider-inner"),
-    slides = sliderInner.querySelectorAll(".offer__slide"),
+function slider({
+  container,
+  slide: slideSelector,
+  nextArrow,
+  prevArrow,
+  totalCur: totalCounter,
+  currentCounter,
+  wrapper,
+  field,
+  sliderCounterSelector,
+}) {
+  const slider = document.querySelector(container),
+    sliderWrapper = slider.querySelector(wrapper),
+    sliderInner = sliderWrapper.querySelector(field),
+    slides = sliderInner.querySelectorAll(slideSelector),
     slidesCount = slides.length,
-    sliderCounter = slider.querySelector(".offer__slider-counter"),
-    arrowPrev = sliderCounter.querySelector(".offer__slider-prev"),
-    arrowNext = sliderCounter.querySelector(".offer__slider-next"),
-    total = sliderCounter.querySelector("#total"),
-    current = sliderCounter.querySelector("#current"),
+    sliderCounter = slider.querySelector(sliderCounterSelector),
+    arrowPrev = sliderCounter.querySelector(prevArrow),
+    arrowNext = sliderCounter.querySelector(nextArrow),
+    total = sliderCounter.querySelector(totalCounter),
+    current = sliderCounter.querySelector(currentCounter),
     wrapperWidth = window.getComputedStyle(sliderWrapper).width,
     numWrapperWidth = +wrapperWidth.slice(0, wrapperWidth.length - 2),
     dotsArray = [];
@@ -105,9 +115,6 @@ function slider() {
       checkValueOfCurIndex(slideIndex);
     })
   );
-
-  //  Почему я не получаю undefiend когда использую querySelector по отношению к элементам,
-  //  которые появлятся в DOM только после вызова функции, которая вызывается после вызовов querySelector ?
 }
 
-module.exports = slider;
+export default slider;

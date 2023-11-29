@@ -1,5 +1,8 @@
-function implementForms() {
-  const forms = document.querySelectorAll("form");
+import { closeModal, showModal } from "./modalWindow";
+import { postData } from "../services/services";
+
+function implementForms(modalTimerID, formSelector) {
+  const forms = document.querySelectorAll(formSelector);
 
   const message = {
     loading: "./img/form/spinner.svg",
@@ -8,18 +11,6 @@ function implementForms() {
   };
 
   forms.forEach((form) => bindPostData(form));
-
-  const postData = async (url, data) => {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: data,
-    });
-
-    return await res.json();
-  };
 
   function bindPostData(form) {
     form.addEventListener("submit", (e) => {
@@ -57,7 +48,7 @@ function implementForms() {
     const prevModalDialog = document.querySelector(".modal__dialog");
 
     prevModalDialog.classList.add("hide");
-    showModal();
+    showModal(".modal", modalTimerID);
 
     const thankModal = document.createElement("div");
     thankModal.classList.add("modal__dialog");
@@ -74,7 +65,7 @@ function implementForms() {
       thankModal.remove();
       prevModalDialog.classList.add("show");
       prevModalDialog.classList.remove("hide");
-      closeModal();
+      closeModal(".modal");
     }, 4000);
   }
 
@@ -83,4 +74,4 @@ function implementForms() {
     .then((res) => console.log(res));
 }
 
-module.exports = implementForms;
+export default implementForms;

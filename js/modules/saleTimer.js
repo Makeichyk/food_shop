@@ -1,6 +1,4 @@
-function saleTimer() {
-  const endOfSale = "2023-12-20";
-
+function saleTimer(timerSelector, endOfSale) {
   function getTimeRemaining(deadline) {
     let days, hours, minutes, seconds;
     const t = Date.parse(deadline) - Date.parse(new Date());
@@ -50,7 +48,7 @@ function saleTimer() {
     }
   }
 
-  setClock(".timer", endOfSale);
+  setClock(timerSelector, endOfSale);
 }
 
-module.exports = saleTimer;
+export default saleTimer;

@@ -115,4 +115,4 @@ function calorieСalc() {
   );
 }
 
-module.exports = calorieСalc;
+export default calorieСalc;
